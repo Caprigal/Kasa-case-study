@@ -1,0 +1,73 @@
+Reporter: Peter Gal
+Product: PUNK API
+Version: v2
+Component: GET method, queryStrings
+Severity: Major
+Assign to: @samjbmason
+URL: https://api.punkapi.com/v2/beers?hops=Chinook&hops=Tomahawk
+Repro rate: 10/10
+Summary: PUNK API returns server error when searching for beers with multiple hops
+
+Description:
+
+Multiple hops search is not implemented, also it's return server error. 
+
+Steps to reproduce:
+
+1. Execute a request for the following url: https://api.punkapi.com/v2/beers?hops=Chinook&hops=Tomahawk
+2. Check the response
+
+Expected result: Executing a GET request on the following URL: https://api.punkapi.com/v2/beers?hops=Chinook&hops=Tomahawk should return all the beers with Chinook and Tomahawk hops.
+
+Actual result: 500, internal server error
+
+Additional information:
+
+The request we sent was:
+
+Method: GET
+URL: https://api.punkapi.com/v2/beers?hops=Chinook&hops=Tomahawk
+Headers: {
+"Connection": "keep-alive",
+"user-agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/106.0.0.0 Safari/537.36",
+"accept": "/",
+"accept-encoding": "gzip, deflate"
+}
+
+The response we got was:
+
+Status: 500 - Internal Server Error
+Headers: {
+"date": "Wed, 05 Oct 2022 13:17:04 GMT",
+"content-type": "application/json; charset=utf-8",
+"content-length": "176",
+"connection": "keep-alive",
+"access-control-allow-credentials": "true",
+"access-control-allow-origin": "*",
+"access-control-expose-headers": "x-ratelimit-limit,x-ratelimit-remaining,content-length,origin,content-type,accept",
+"cache-control": "public, max-age=14400, must-revalidate",
+"etag": "W/"b0-IkA6f5HS9tkGjedMSqq1oUxyUAw"",
+"strict-transport-security": "max-age=15552000; includeSubDomains",
+"x-content-type-options": "nosniff",
+"x-dns-prefetch-control": "off",
+"x-download-options": "noopen",
+"x-frame-options": "SAMEORIGIN",
+"x-ratelimit-limit": "3600",
+"x-ratelimit-remaining": "3533",
+"x-ratelimit-reset": "1664978920",
+"x-vercel-cache": "MISS",
+"x-vercel-id": "fra1::sfo1::w2xc7-1664975824669-0e083a0f4728",
+"x-xss-protection": "1; mode=block",
+"cf-cache-status": "EXPIRED",
+"report-to": "{"endpoints":[{"url":"https:\/\/a.nel.cloudflare.com\/report\/v3?s=UKtlMAVXE4Hf9VIdxwkOMxYs8%2FXGqKgKBwOy2IwZnDGNDVzBxEmIB9ZOmoKBpkzAv6c9agaHXVdY6zpvx7kKwQkoNfPQG2poFygINXfhzowbVw6sOlFDKY7FKrMeyT%2FFy6s%3D"}],"group":"cf-nel","max_age":604800}",
+"nel": "{"success_fraction":0,"report_to":"cf-nel","max_age":604800}",
+"vary": "Accept-Encoding",
+"server": "cloudflare",
+"cf-ray": "75566f77ccca78b5-VIE",
+"alt-svc": "h3=":443"; ma=86400, h3-29=":443"; ma=86400"
+}
+Body: {
+"statusCode": 500,
+"error": "Internal Server Error",
+"message": "Something has gone wrong on our end please try again, if the problem persists email sam.jbmason+punkapi@gmail.com"
+}
