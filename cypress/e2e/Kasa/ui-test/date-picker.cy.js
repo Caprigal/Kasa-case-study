@@ -23,7 +23,7 @@ describe('In Kasa web application', () => {
     let firstDate = dateFromToday(date[0])
     let secondDate = dateFromToday(date[1])
 
-    it(`date picker should let the user book only for future date - @${firstDate['month']}/${firstDate['day']}/${firstDate['year']}-${secondDate['month']}/${secondDate['day']}/${secondDate['year']}`, () => {
+    it(`type - date picker should let the user book only for future date - @${firstDate['month']}/${firstDate['day']}/${firstDate['year']}-${secondDate['month']}/${secondDate['day']}/${secondDate['year']}`, () => {
       cy.get('.listbox-items__item')
         .first()
         .click()
@@ -39,6 +39,26 @@ describe('In Kasa web application', () => {
 
           /* Validate if error message is displayed */
           cy.get('#full-screen-hero-invalid-dates-error').should('exist')
+        })
+    })
+
+    it(`select - date picker should let the user book only for future date - @${firstDate['month']}/${firstDate['day']}/${firstDate['year']}-${secondDate['month']}/${secondDate['day']}/${secondDate['year']}`, () => {
+      cy.get('.listbox-items__item')
+        .first()
+        .click()
+        .then(() => {
+          /* Open date picker */
+          cy.get('#full-screen-hero-check-in-input').click()
+
+          if (date[0] < -30) {
+            cy.get(`[date="${firstDate['year']}-${firstDate['month']}-${firstDate['day']}"]`).should('not.exist')
+
+            cy.get(`[date="${secondDate['year']}-${secondDate['month']}-${secondDate['day']}"]`).should('not.exist')
+          } else {
+            cy.get(`[date="${firstDate['year']}-${firstDate['month']}-${firstDate['day']}"]`).should('be.disabled')
+
+            cy.get(`[date="${secondDate['year']}-${secondDate['month']}-${secondDate['day']}"]`).should('be.disabled')
+          }
         })
     })
   })
